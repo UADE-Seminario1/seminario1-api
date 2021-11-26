@@ -4,10 +4,7 @@
   "description": "Main API for Seminario 1 project",
   "main": "index.js",
   "scripts": {
-    "db:migrate:create": "xmigrate create",
-    "db:migrate:status": "xmigrate status",
-    "db:migrate:up": "xmigrate up",
-    "db:migrate:down": "xmigrate down",
+    "db:load": "xmigrate up",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf dist/*",
     "tsc": "tsc",
@@ -23,7 +20,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@rxdi/xmigrate": "^0.7.20",
     "@types/bluebird": "^3.5.36",
     "@types/body-parser": "^1.19.2",
     "@types/compression": "^1.7.2",

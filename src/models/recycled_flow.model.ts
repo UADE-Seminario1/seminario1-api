@@ -47,6 +47,7 @@ const recycledFlowSchema: Schema = new Schema(
       {
         type: stepSchema,
         required: true,
+        _id: false,
       },
     ],
   },
