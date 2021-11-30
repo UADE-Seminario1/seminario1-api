@@ -41,7 +41,7 @@ const recycledFlowSchema: Schema = new Schema(
     },
     material: {
       type: String,
-      required: true,
+      required: false,
     },
     steps: [
       {
@@ -67,6 +67,7 @@ export interface IRecycledFlowInstanceDocument extends Document {
   player: IPlayerDocument['_id'];
   steps: Array<string>;
   state: string;
+  points: number;
 }
 
 export interface IRecycledFlowInstanceModel extends Model<IRecycledFlowInstanceDocument> {}
@@ -94,6 +95,10 @@ const recycledFlowInstanceSchema: Schema = new Schema(
     state: {
       type: String,
       enum: ['opened', 'closed'],
+    },
+    points: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true },

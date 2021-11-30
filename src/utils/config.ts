@@ -14,6 +14,14 @@ const defaultConfig = {
     secret: '123',
     port: 9001,
   },
+  jwt: {
+    expiration: '24h',
+  },
+  google_auth: {
+    client_id: '479477726850-sr8ri901ln1jvsgoitih7p577l2auu07.apps.googleusercontent.com',
+    client_secret: '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',
+    redirect_uris: ['http://localhost:9001/oauth2callback'],
+  },
 };
 
 function config(): nconf.Provider {

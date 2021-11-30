@@ -2,7 +2,7 @@ import express from 'express';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 import lusca from 'lusca';
-import mongoose from 'mongoose';
+import mongoose, { ConnectOptions } from 'mongoose';
 import bluebird from 'bluebird';
 import errorHandler from 'errorhandler';
 import getConfig from './utils/config';
@@ -13,12 +13,8 @@ mongoose.Promise = bluebird;
 const config = getConfig();
 const node_env = config.get('node_env');
 const app: express.Application = express();
-const mongoUrl = config.get('mongodb:url') + '/' + config.get('mongodb:database');
-
-const mongoOpts = {
-  useNewUrlParser: true,
-  w: 2,
-};
+const mongoUrl = config.get('mongodb:url');
+const mongoOpts: ConnectOptions = config.get('mongodb:options');
 
 const corsOptions = {
   origin: 'http://localhost:3000',

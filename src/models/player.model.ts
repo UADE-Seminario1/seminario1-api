@@ -6,13 +6,7 @@ export interface IUserSubDocument extends Document {
   fullname: string;
   username: string;
   email: string;
-  photo: string;
-}
-
-export interface IPlayerMedalSubDocument extends Document {
-  medal: IMedalDocument['_id'];
-  points: number;
-  is_granted: boolean;
+  photo?: string;
 }
 
 export interface IPlayerDocument extends Document {
@@ -22,10 +16,7 @@ export interface IPlayerDocument extends Document {
   month_points: number;
   points: number;
   coins: number;
-  medals: IPlayerMedalSubDocument;
 }
-
-export interface IPlayerModel extends Model<IPlayerDocument> {}
 
 const userSchema = new Schema({
   fullname: {
@@ -47,22 +38,6 @@ const userSchema = new Schema({
   photo: {
     type: String,
     required: false,
-  },
-});
-
-const playerMedalSchema = new Schema({
-  medal: {
-    type: String,
-    required: true,
-  },
-  points: {
-    type: Number,
-    required: true,
-  },
-  is_granted: {
-    type: Boolean,
-    required: true,
-    default: false,
   },
 });
 
@@ -96,17 +71,70 @@ const schema: Schema = new Schema(
       required: false,
       default: 0,
     },
-    medals: [
-      {
-        type: playerMedalSchema,
-        required: false,
-        _id: false,
-      },
-    ],
   },
   { timestamps: true },
 );
 
+export interface IPlayerModel extends Model<IPlayerDocument> {}
+
 const PlayerModel: IPlayerModel = model<IPlayerDocument, IPlayerModel>('player', schema, 'players', true);
+
+export interface IPlayerMedalDocument extends Document {
+  player: IPlayerDocument['_id'];
+  medal: IMedalDocument['_id'];
+  name: string;
+  target_points: number;
+  points: number;
+  material: string;
+  is_granted: boolean;
+}
+
+const playerMedalSchema = new Schema({
+  _id: {
+    type: String,
+    default: uuidv4,
+  },
+  player: {
+    type: String,
+    required: true,
+  },
+  medal: {
+    type: String,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true,
+  },
+  target_points: {
+    type: Number,
+    required: true,
+    default: 20,
+  },
+  points: {
+    type: Number,
+    required: true,
+  },
+  material: {
+    type: String,
+    required: true,
+  },
+  is_granted: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+});
+
+export interface IPlayerMedalModel extends Model<IPlayerMedalDocument> {}
+
+export const PlayerMedalModel: IPlayerMedalModel = model<IPlayerMedalDocument, IPlayerMedalModel>(
+  'player_medal',
+  playerMedalSchema,
+  'player_medals',
+  true,
+);
 
 export default PlayerModel;

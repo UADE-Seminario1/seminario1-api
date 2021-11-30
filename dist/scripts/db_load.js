@@ -50,142 +50,173 @@ var config = (0, config_1.default)();
 var mongoUrl = config.get('mongodb:url');
 var mongoOpts = config.get('mongodb:options');
 var loadData = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var player1, player2, medal1, medal2, medal3, medal4, flow1, flow2, flow3, flow4, flow5;
+    var findOneAndUpdateOptions, medalNovato, medalAsiduo, medalEstrella;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                player1 = new player_model_1.default({
-                    name: 'GodPlayer1',
-                    user: {
-                        fullname: 'Administrator 1',
-                        username: 'admin1',
-                        email: 'admin1@gmail.com',
-                    },
-                });
-                return [4 /*yield*/, player1.save()];
+                console.log('Loading data into the database...');
+                findOneAndUpdateOptions = { upsert: true /*, overwrite: true*/ };
+                return [4 /*yield*/, player_model_1.default.findOneAndUpdate({ name: 'GodPlayer1' }, {
+                        name: 'GodPlayer1',
+                        user: {
+                            fullname: 'Administrator 1',
+                            username: 'admin1',
+                            email: 'admin1@gmail.com',
+                        },
+                    }, findOneAndUpdateOptions).exec()];
             case 1:
                 _a.sent();
-                player2 = new player_model_1.default({
-                    name: 'GodPlayer2',
-                    user: {
-                        fullname: 'Administrator 2',
-                        username: 'admin2',
-                        email: 'admin2@gmail.com',
-                    },
-                });
-                return [4 /*yield*/, player2.save()];
+                return [4 /*yield*/, player_model_1.default.findOneAndUpdate({ name: 'GodPlayer2' }, {
+                        name: 'GodPlayer2',
+                        user: {
+                            fullname: 'Administrator 2',
+                            username: 'admin2',
+                            email: 'admin2@gmail.com',
+                        },
+                    }, findOneAndUpdateOptions).exec()];
             case 2:
                 _a.sent();
-                medal1 = new medal_model_1.default({
-                    name: 'Subteniente Plastico',
-                    description: 'Alcanza la meta reciclando más plástico',
-                    target_points: 100,
-                    material: 'plastic',
-                    coins_reward: 5,
-                });
-                return [4 /*yield*/, medal1.save()];
+                return [4 /*yield*/, medal_model_1.default.findOneAndUpdate({ name: 'Subteniente Plastico' }, {
+                        name: 'Subteniente Plastico',
+                        description: 'Alcanza la meta reciclando más plástico',
+                        target_points: 100,
+                        material: 'plastic',
+                        coins_reward: 5,
+                    }, findOneAndUpdateOptions).exec()];
             case 3:
                 _a.sent();
-                medal2 = new medal_model_1.default({
-                    name: 'Coronel Metal',
-                    description: 'Alcanza la meta reciclando más metal',
-                    target_points: 50,
-                    material: 'metal',
-                    coins_reward: 9,
-                });
-                return [4 /*yield*/, medal2.save()];
+                return [4 /*yield*/, medal_model_1.default.findOneAndUpdate({ name: 'Coronel Metal' }, {
+                        name: 'Coronel Metal',
+                        description: 'Alcanza la meta reciclando más metal',
+                        target_points: 50,
+                        material: 'metal',
+                        coins_reward: 9,
+                    }, findOneAndUpdateOptions).exec()];
             case 4:
                 _a.sent();
-                medal3 = new medal_model_1.default({
-                    name: 'General Vidrio',
-                    description: 'Alcanza la meta reciclando más vidrio',
-                    target_points: 80,
-                    material: 'glass',
-                    coins_reward: 12,
-                });
-                return [4 /*yield*/, medal3.save()];
+                return [4 /*yield*/, medal_model_1.default.findOneAndUpdate({ name: 'General Vidrio' }, {
+                        name: 'General Vidrio',
+                        description: 'Alcanza la meta reciclando más vidrio',
+                        target_points: 80,
+                        material: 'glass',
+                        coins_reward: 12,
+                    }, findOneAndUpdateOptions).exec()];
             case 5:
                 _a.sent();
-                medal4 = new medal_model_1.default({
-                    name: 'Oficial Carton',
-                    description: 'Alcanza la meta reciclando más carton',
-                    target_points: 50,
-                    material: 'cardboard',
-                    coins_reward: 4,
-                });
-                return [4 /*yield*/, medal4.save()];
+                return [4 /*yield*/, medal_model_1.default.findOneAndUpdate({ name: 'Oficial Carton' }, {
+                        name: 'Oficial Carton',
+                        description: 'Alcanza la meta reciclando más carton',
+                        target_points: 50,
+                        material: 'cardboard',
+                        coins_reward: 4,
+                    }, findOneAndUpdateOptions).exec()];
             case 6:
                 _a.sent();
-                flow1 = new recycled_flow_model_1.default({
-                    name: 'Flujo del Vidrio',
-                    material: 'glass',
-                    steps: [
-                        { number: '0', points: 2 },
-                        { number: '1', points: 1 },
-                        { number: '2', points: 1 },
-                        { number: '3', points: 1 },
-                        { number: '4', points: 1 },
-                    ],
-                });
-                return [4 /*yield*/, flow1.save()];
+                return [4 /*yield*/, medal_model_1.default.findOneAndUpdate({ name: 'Reciclador Novato' }, {
+                        name: 'Reciclador Novato',
+                        description: 'Alcanza la meta por reciclar',
+                        target_points: 100,
+                        material: 'generic',
+                        coins_reward: 4,
+                    }, findOneAndUpdateOptions).exec()];
             case 7:
-                _a.sent();
-                flow2 = new recycled_flow_model_1.default({
-                    name: 'Flujo del Carton',
-                    material: 'cardboard',
-                    steps: [
-                        { number: '0', points: 2 },
-                        { number: '1', points: 1 },
-                        { number: '2', points: 1 },
-                        { number: '3', points: 1 },
-                        { number: '4', points: 1 },
-                    ],
-                });
-                return [4 /*yield*/, flow2.save()];
+                medalNovato = _a.sent();
+                return [4 /*yield*/, medal_model_1.default.findOneAndUpdate({ name: 'Reciclador Asiduo' }, {
+                        name: 'Reciclador Asiduo',
+                        description: 'Alcanza la meta por continuar reciclando',
+                        target_points: 400,
+                        material: 'generic',
+                        coins_reward: 8,
+                        medals_required: [medalNovato._id],
+                    }, findOneAndUpdateOptions).exec()];
             case 8:
-                _a.sent();
-                flow3 = new recycled_flow_model_1.default({
-                    name: 'Flujo del Plastico',
-                    material: 'plastic',
-                    steps: [
-                        { number: '0', points: 2 },
-                        { number: '1', points: 1 },
-                        { number: '2', points: 1 },
-                        { number: '3', points: 1 },
-                        { number: '4', points: 1 },
-                    ],
-                });
-                return [4 /*yield*/, flow3.save()];
+                medalAsiduo = _a.sent();
+                return [4 /*yield*/, medal_model_1.default.findOneAndUpdate({ name: 'Reciclador Estrella' }, {
+                        name: 'Reciclador Estrella',
+                        description: 'Alcanza la meta por continuar reciclando',
+                        target_points: 1000,
+                        material: 'generic',
+                        coins_reward: 12,
+                        medals_required: [medalAsiduo._id],
+                    }, findOneAndUpdateOptions).exec()];
             case 9:
-                _a.sent();
-                flow4 = new recycled_flow_model_1.default({
-                    name: 'Flujo del Papel',
-                    material: 'paper',
-                    steps: [
-                        { number: '0', points: 2 },
-                        { number: '1', points: 1 },
-                        { number: '2', points: 1 },
-                        { number: '3', points: 1 },
-                        { number: '4', points: 1 },
-                    ],
-                });
-                return [4 /*yield*/, flow4.save()];
+                medalEstrella = _a.sent();
+                return [4 /*yield*/, medal_model_1.default.findOneAndUpdate({ name: 'Reciclador Visionario 1' }, {
+                        name: 'Reciclador Visionario 1',
+                        description: 'Alcanza la meta por continuar reciclando',
+                        target_points: 2000,
+                        material: 'generic',
+                        coins_reward: 24,
+                        medals_required: [medalEstrella._id],
+                    }, findOneAndUpdateOptions).exec()];
             case 10:
                 _a.sent();
-                flow5 = new recycled_flow_model_1.default({
-                    name: 'Flujo del Metal',
-                    material: 'metal',
-                    steps: [
-                        { number: '0', points: 2 },
-                        { number: '1', points: 1 },
-                        { number: '2', points: 1 },
-                        { number: '3', points: 1 },
-                        { number: '4', points: 1 },
-                    ],
-                });
-                return [4 /*yield*/, flow5.save()];
+                return [4 /*yield*/, recycled_flow_model_1.default.findOneAndUpdate({ name: 'Flujo del Vidrio' }, {
+                        name: 'Flujo del Vidrio',
+                        material: 'glass',
+                        steps: [
+                            { number: '0', points: 2 },
+                            { number: '1', points: 1 },
+                            { number: '2', points: 1 },
+                            { number: '3', points: 1 },
+                            { number: '4', points: 1 },
+                        ],
+                    }, findOneAndUpdateOptions).exec()];
             case 11:
                 _a.sent();
+                return [4 /*yield*/, recycled_flow_model_1.default.findOneAndUpdate({ name: 'Flujo del Carton' }, {
+                        name: 'Flujo del Carton',
+                        material: 'cardboard',
+                        steps: [
+                            { number: '0', points: 2 },
+                            { number: '1', points: 1 },
+                            { number: '2', points: 1 },
+                            { number: '3', points: 1 },
+                            { number: '4', points: 1 },
+                        ],
+                    }, findOneAndUpdateOptions).exec()];
+            case 12:
+                _a.sent();
+                return [4 /*yield*/, recycled_flow_model_1.default.findOneAndUpdate({ name: 'Flujo del Plastico' }, {
+                        name: 'Flujo del Plastico',
+                        material: 'plastic',
+                        steps: [
+                            { number: '0', points: 2 },
+                            { number: '1', points: 1 },
+                            { number: '2', points: 1 },
+                            { number: '3', points: 1 },
+                            { number: '4', points: 1 },
+                        ],
+                    }, findOneAndUpdateOptions).exec()];
+            case 13:
+                _a.sent();
+                return [4 /*yield*/, recycled_flow_model_1.default.findOneAndUpdate({ name: 'Flujo del Papel' }, {
+                        name: 'Flujo del Papel',
+                        material: 'paper',
+                        steps: [
+                            { number: '0', points: 2 },
+                            { number: '1', points: 1 },
+                            { number: '2', points: 1 },
+                            { number: '3', points: 1 },
+                            { number: '4', points: 1 },
+                        ],
+                    }, findOneAndUpdateOptions).exec()];
+            case 14:
+                _a.sent();
+                return [4 /*yield*/, recycled_flow_model_1.default.findOneAndUpdate({ name: 'Flujo del Metal' }, {
+                        name: 'Flujo del Metal',
+                        material: 'metal',
+                        steps: [
+                            { number: '0', points: 2 },
+                            { number: '1', points: 1 },
+                            { number: '2', points: 1 },
+                            { number: '3', points: 1 },
+                            { number: '4', points: 1 },
+                        ],
+                    }, findOneAndUpdateOptions).exec()];
+            case 15:
+                _a.sent();
+                console.log('Data was loaded in the database');
                 return [2 /*return*/];
         }
     });
@@ -208,4 +239,4 @@ mongoose_1.default
     console.log('Cannot connect to the MongoDB database');
     console.log(e);
 });
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGJfbG9hZC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9zY3JpcHRzL2RiX2xvYWQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSxzREFBb0Q7QUFDcEQsc0RBQWdDO0FBQ2hDLDJEQUF3QztBQUN4Qyx3RUFBc0U7QUFDdEUsc0VBQW1FO0FBQ25FLHNGQUF5RjtBQUV6RixrQkFBUSxDQUFDLE9BQU8sR0FBRyxrQkFBUSxDQUFDO0FBRTVCLElBQU0sTUFBTSxHQUFHLElBQUEsZ0JBQVMsR0FBRSxDQUFDO0FBRTNCLElBQU0sUUFBUSxHQUFHLE1BQU0sQ0FBQyxHQUFHLENBQUMsYUFBYSxDQUFDLENBQUM7QUFDM0MsSUFBTSxTQUFTLEdBQW1CLE1BQU0sQ0FBQyxHQUFHLENBQUMsaUJBQWlCLENBQUMsQ0FBQztBQUVoRSxJQUFNLFFBQVEsR0FBRzs7Ozs7Z0JBQ1QsT0FBTyxHQUFvQixJQUFJLHNCQUFXLENBQUM7b0JBQy9DLElBQUksRUFBRSxZQUFZO29CQUNsQixJQUFJLEVBQUU7d0JBQ0osUUFBUSxFQUFFLGlCQUFpQjt3QkFDM0IsUUFBUSxFQUFFLFFBQVE7d0JBQ2xCLEtBQUssRUFBRSxrQkFBa0I7cUJBQzFCO2lCQUNGLENBQUMsQ0FBQztnQkFDSCxxQkFBTSxPQUFPLENBQUMsSUFBSSxFQUFFLEVBQUE7O2dCQUFwQixTQUFvQixDQUFDO2dCQUVmLE9BQU8sR0FBb0IsSUFBSSxzQkFBVyxDQUFDO29CQUMvQyxJQUFJLEVBQUUsWUFBWTtvQkFDbEIsSUFBSSxFQUFFO3dCQUNKLFFBQVEsRUFBRSxpQkFBaUI7d0JBQzNCLFFBQVEsRUFBRSxRQUFRO3dCQUNsQixLQUFLLEVBQUUsa0JBQWtCO3FCQUMxQjtpQkFDRixDQUFDLENBQUM7Z0JBQ0gscUJBQU0sT0FBTyxDQUFDLElBQUksRUFBRSxFQUFBOztnQkFBcEIsU0FBb0IsQ0FBQztnQkFFZixNQUFNLEdBQW1CLElBQUkscUJBQVUsQ0FBQztvQkFDNUMsSUFBSSxFQUFFLHNCQUFzQjtvQkFDNUIsV0FBVyxFQUFFLHlDQUF5QztvQkFDdEQsYUFBYSxFQUFFLEdBQUc7b0JBQ2xCLFFBQVEsRUFBRSxTQUFTO29CQUNuQixZQUFZLEVBQUUsQ0FBQztpQkFDaEIsQ0FBQyxDQUFDO2dCQUNILHFCQUFNLE1BQU0sQ0FBQyxJQUFJLEVBQUUsRUFBQTs7Z0JBQW5CLFNBQW1CLENBQUM7Z0JBRWQsTUFBTSxHQUFtQixJQUFJLHFCQUFVLENBQUM7b0JBQzVDLElBQUksRUFBRSxlQUFlO29CQUNyQixXQUFXLEVBQUUsc0NBQXNDO29CQUNuRCxhQUFhLEVBQUUsRUFBRTtvQkFDakIsUUFBUSxFQUFFLE9BQU87b0JBQ2pCLFlBQVksRUFBRSxDQUFDO2lCQUNoQixDQUFDLENBQUM7Z0JBQ0gscUJBQU0sTUFBTSxDQUFDLElBQUksRUFBRSxFQUFBOztnQkFBbkIsU0FBbUIsQ0FBQztnQkFFZCxNQUFNLEdBQW1CLElBQUkscUJBQVUsQ0FBQztvQkFDNUMsSUFBSSxFQUFFLGdCQUFnQjtvQkFDdEIsV0FBVyxFQUFFLHVDQUF1QztvQkFDcEQsYUFBYSxFQUFFLEVBQUU7b0JBQ2pCLFFBQVEsRUFBRSxPQUFPO29CQUNqQixZQUFZLEVBQUUsRUFBRTtpQkFDakIsQ0FBQyxDQUFDO2dCQUNILHFCQUFNLE1BQU0sQ0FBQyxJQUFJLEVBQUUsRUFBQTs7Z0JBQW5CLFNBQW1CLENBQUM7Z0JBRWQsTUFBTSxHQUFtQixJQUFJLHFCQUFVLENBQUM7b0JBQzVDLElBQUksRUFBRSxnQkFBZ0I7b0JBQ3RCLFdBQVcsRUFBRSx1Q0FBdUM7b0JBQ3BELGFBQWEsRUFBRSxFQUFFO29CQUNqQixRQUFRLEVBQUUsV0FBVztvQkFDckIsWUFBWSxFQUFFLENBQUM7aUJBQ2hCLENBQUMsQ0FBQztnQkFDSCxxQkFBTSxNQUFNLENBQUMsSUFBSSxFQUFFLEVBQUE7O2dCQUFuQixTQUFtQixDQUFDO2dCQUVkLEtBQUssR0FBMEIsSUFBSSw2QkFBaUIsQ0FBQztvQkFDekQsSUFBSSxFQUFFLGtCQUFrQjtvQkFDeEIsUUFBUSxFQUFFLE9BQU87b0JBQ2pCLEtBQUssRUFBRTt3QkFDTCxFQUFFLE1BQU0sRUFBRSxHQUFHLEVBQUUsTUFBTSxFQUFFLENBQUMsRUFBRTt3QkFDMUIsRUFBRSxNQUFNLEVBQUUsR0FBRyxFQUFFLE1BQU0sRUFBRSxDQUFDLEVBQUU7d0JBQzFCLEVBQUUsTUFBTSxFQUFFLEdBQUcsRUFBRSxNQUFNLEVBQUUsQ0FBQyxFQUFFO3dCQUMxQixFQUFFLE1BQU0sRUFBRSxHQUFHLEVBQUUsTUFBTSxFQUFFLENBQUMsRUFBRTt3QkFDMUIsRUFBRSxNQUFNLEVBQUUsR0FBRyxFQUFFLE1BQU0sRUFBRSxDQUFDLEVBQUU7cUJBQzNCO2lCQUNGLENBQUMsQ0FBQztnQkFDSCxxQkFBTSxLQUFLLENBQUMsSUFBSSxFQUFFLEVBQUE7O2dCQUFsQixTQUFrQixDQUFDO2dCQUViLEtBQUssR0FBMEIsSUFBSSw2QkFBaUIsQ0FBQztvQkFDekQsSUFBSSxFQUFFLGtCQUFrQjtvQkFDeEIsUUFBUSxFQUFFLFdBQVc7b0JBQ3JCLEtBQUssRUFBRTt3QkFDTCxFQUFFLE1BQU0sRUFBRSxHQUFHLEVBQUUsTUFBTSxFQUFFLENBQUMsRUFBRTt3QkFDMUIsRUFBRSxNQUFNLEVBQUUsR0FBRyxFQUFFLE1BQU0sRUFBRSxDQUFDLEVBQUU7d0JBQzFCLEVBQUUsTUFBTSxFQUFFLEdBQUcsRUFBRSxNQUFNLEVBQUUsQ0FBQyxFQUFFO3dCQUMxQixFQUFFLE1BQU0sRUFBRSxHQUFHLEVBQUUsTUFBTSxFQUFFLENBQUMsRUFBRTt3QkFDMUIsRUFBRSxNQUFNLEVBQUUsR0FBRyxFQUFFLE1BQU0sRUFBRSxDQUFDLEVBQUU7cUJBQzNCO2lCQUNGLENBQUMsQ0FBQztnQkFDSCxxQkFBTSxLQUFLLENBQUMsSUFBSSxFQUFFLEVBQUE7O2dCQUFsQixTQUFrQixDQUFDO2dCQUViLEtBQUssR0FBMEIsSUFBSSw2QkFBaUIsQ0FBQztvQkFDekQsSUFBSSxFQUFFLG9CQUFvQjtvQkFDMUIsUUFBUSxFQUFFLFNBQVM7b0JBQ25CLEtBQUssRUFBRTt3QkFDTCxFQUFFLE1BQU0sRUFBRSxHQUFHLEVBQUUsTUFBTSxFQUFFLENBQUMsRUFBRTt3QkFDMUIsRUFBRSxNQUFNLEVBQUUsR0FBRyxFQUFFLE1BQU0sRUFBRSxDQUFDLEVBQUU7d0JBQzFCLEVBQUUsTUFBTSxFQUFFLEdBQUcsRUFBRSxNQUFNLEVBQUUsQ0FBQyxFQUFFO3dCQUMxQixFQUFFLE1BQU0sRUFBRSxHQUFHLEVBQUUsTUFBTSxFQUFFLENBQUMsRUFBRTt3QkFDMUIsRUFBRSxNQUFNLEVBQUUsR0FBRyxFQUFFLE1BQU0sRUFBRSxDQUFDLEVBQUU7cUJBQzNCO2lCQUNGLENBQUMsQ0FBQztnQkFDSCxxQkFBTSxLQUFLLENBQUMsSUFBSSxFQUFFLEVBQUE7O2dCQUFsQixTQUFrQixDQUFDO2dCQUViLEtBQUssR0FBMEIsSUFBSSw2QkFBaUIsQ0FBQztvQkFDekQsSUFBSSxFQUFFLGlCQUFpQjtvQkFDdkIsUUFBUSxFQUFFLE9BQU87b0JBQ2pCLEtBQUssRUFBRTt3QkFDTCxFQUFFLE1BQU0sRUFBRSxHQUFHLEVBQUUsTUFBTSxFQUFFLENBQUMsRUFBRTt3QkFDMUIsRUFBRSxNQUFNLEVBQUUsR0FBRyxFQUFFLE1BQU0sRUFBRSxDQUFDLEVBQUU7d0JBQzFCLEVBQUUsTUFBTSxFQUFFLEdBQUcsRUFBRSxNQUFNLEVBQUUsQ0FBQyxFQUFFO3dCQUMxQixFQUFFLE1BQU0sRUFBRSxHQUFHLEVBQUUsTUFBTSxFQUFFLENBQUMsRUFBRTt3QkFDMUIsRUFBRSxNQUFNLEVBQUUsR0FBRyxFQUFFLE1BQU0sRUFBRSxDQUFDLEVBQUU7cUJBQzNCO2lCQUNGLENBQUMsQ0FBQztnQkFDSCxxQkFBTSxLQUFLLENBQUMsSUFBSSxFQUFFLEVBQUE7O2dCQUFsQixTQUFrQixDQUFDO2dCQUViLEtBQUssR0FBMEIsSUFBSSw2QkFBaUIsQ0FBQztvQkFDekQsSUFBSSxFQUFFLGlCQUFpQjtvQkFDdkIsUUFBUSxFQUFFLE9BQU87b0JBQ2pCLEtBQUssRUFBRTt3QkFDTCxFQUFFLE1BQU0sRUFBRSxHQUFHLEVBQUUsTUFBTSxFQUFFLENBQUMsRUFBRTt3QkFDMUIsRUFBRSxNQUFNLEVBQUUsR0FBRyxFQUFFLE1BQU0sRUFBRSxDQUFDLEVBQUU7d0JBQzFCLEVBQUUsTUFBTSxFQUFFLEdBQUcsRUFBRSxNQUFNLEVBQUUsQ0FBQyxFQUFFO3dCQUMxQixFQUFFLE1BQU0sRUFBRSxHQUFHLEVBQUUsTUFBTSxFQUFFLENBQUMsRUFBRTt3QkFDMUIsRUFBRSxNQUFNLEVBQUUsR0FBRyxFQUFFLE1BQU0sRUFBRSxDQUFDLEVBQUU7cUJBQzNCO2lCQUNGLENBQUMsQ0FBQztnQkFDSCxxQkFBTSxLQUFLLENBQUMsSUFBSSxFQUFFLEVBQUE7O2dCQUFsQixTQUFrQixDQUFDOzs7O0tBQ3BCLENBQUM7QUFFRixrQkFBUTtLQUNMLE9BQU8sQ0FBQyxRQUFRLEVBQUUsU0FBUyxDQUFDO0tBQzVCLElBQUksQ0FBQzs7OztnQkFDSixPQUFPLENBQUMsR0FBRyxDQUFDLG1DQUFtQyxDQUFDLENBQUM7Z0JBQ2pELHFCQUFNLFFBQVEsRUFBRSxFQUFBOztnQkFBaEIsU0FBZ0IsQ0FBQzs7OztLQUNsQixDQUFDO0tBQ0QsS0FBSyxDQUFDLFVBQUMsQ0FBQztJQUNQLE9BQU8sQ0FBQyxHQUFHLENBQUMsd0NBQXdDLENBQUMsQ0FBQztJQUN0RCxPQUFPLENBQUMsR0FBRyxDQUFDLENBQUMsQ0FBQyxDQUFDO0FBQ2pCLENBQUMsQ0FBQyxDQUFDIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGJfbG9hZC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9zY3JpcHRzL2RiX2xvYWQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSxzREFBb0Q7QUFDcEQsc0RBQWdDO0FBQ2hDLDJEQUF3QztBQUN4Qyx3RUFBaUQ7QUFDakQsc0VBQW1FO0FBQ25FLHNGQUE4RDtBQUU5RCxrQkFBUSxDQUFDLE9BQU8sR0FBRyxrQkFBUSxDQUFDO0FBRTVCLElBQU0sTUFBTSxHQUFHLElBQUEsZ0JBQVMsR0FBRSxDQUFDO0FBRTNCLElBQU0sUUFBUSxHQUFHLE1BQU0sQ0FBQyxHQUFHLENBQUMsYUFBYSxDQUFDLENBQUM7QUFDM0MsSUFBTSxTQUFTLEdBQW1CLE1BQU0sQ0FBQyxHQUFHLENBQUMsaUJBQWlCLENBQUMsQ0FBQztBQUVoRSxJQUFNLFFBQVEsR0FBRzs7Ozs7Z0JBQ2YsT0FBTyxDQUFDLEdBQUcsQ0FBQyxtQ0FBbUMsQ0FBQyxDQUFDO2dCQUUzQyx1QkFBdUIsR0FBRyxFQUFFLE1BQU0sRUFBRSxJQUFJLENBQUMscUJBQXFCLEVBQUUsQ0FBQztnQkFDdkUscUJBQU0sc0JBQVcsQ0FBQyxnQkFBZ0IsQ0FDaEMsRUFBRSxJQUFJLEVBQUUsWUFBWSxFQUFFLEVBQ3RCO3dCQUNFLElBQUksRUFBRSxZQUFZO3dCQUNsQixJQUFJLEVBQUU7NEJBQ0osUUFBUSxFQUFFLGlCQUFpQjs0QkFDM0IsUUFBUSxFQUFFLFFBQVE7NEJBQ2xCLEtBQUssRUFBRSxrQkFBa0I7eUJBQzFCO3FCQUNGLEVBQ0QsdUJBQXVCLENBQ3hCLENBQUMsSUFBSSxFQUFFLEVBQUE7O2dCQVhSLFNBV1EsQ0FBQztnQkFFVCxxQkFBTSxzQkFBVyxDQUFDLGdCQUFnQixDQUNoQyxFQUFFLElBQUksRUFBRSxZQUFZLEVBQUUsRUFDdEI7d0JBQ0UsSUFBSSxFQUFFLFlBQVk7d0JBQ2xCLElBQUks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
