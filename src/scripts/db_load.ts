@@ -4,6 +4,7 @@ import getConfig from '../utils/config';
 import PlayerModel from '../models/player.model';
 import MedalModel, { IMedalDocument } from '../models/medal.model';
 import RecycledFlowModel from '../models/recycled_flow.model';
+import BinModel from '../models/bin.model';
 
 mongoose.Promise = bluebird;
 
@@ -217,6 +218,15 @@ const loadData = async () => {
         { number: '3', points: 1 },
         { number: '4', points: 1 },
       ],
+    },
+    findOneAndUpdateOptions,
+  ).exec();
+
+  await BinModel.findOneAndUpdate(
+    { name: 'cesto inteligente prototipo 1' },
+    {
+      name: 'cesto inteligente prototipo 1',
+      connection_code: '123',
     },
     findOneAndUpdateOptions,
   ).exec();
