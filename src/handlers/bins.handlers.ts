@@ -21,7 +21,7 @@ async function registerPoints(
   }).exec();
 
   let materialMedalsDocs: Array<IMedalDocument> = [];
-  if (material) {
+  if (material || material == 'unknown') {
     materialMedalsDocs = await MedalModel.find({ material, medals_required: { $size: 0 } }).exec();
   }
 
@@ -89,7 +89,123 @@ export const createBinConnection = (config: nconf.Provider) => async (req: Reque
       connection_id: newBinConnection._id,
     };
 
-    return res.status(200).json({ message: 'connection requested', data: responseData });
+    return res.status(200).json({ message: 'bin-connection requested', data: responseData });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: 'something wrong happened' });
+  }
+};
+
+export const getRequestedBinConnection = (config: nconf.Provider) => async (req: Request, res: Response) => {
+  const { params } = req;
+  const { binId } = params;
+  try {
+    const binConnection: IBinConnectionDocument | null = await BinConnectionModel.findOne(
+      { bin: binId, state: 'requested' },
+      {},
+      { sort: { createdAt: -1 } },
+    ).exec();
+
+    if (!binConnection) {
+      return res.status(404).json({ message: 'recent requested bin-connection not found' });
+    }
+
+    const responseData = {
+      id: binConnection._id,
+      player_id: binConnection.player,
+      flow_points: binConnection.flow_points,
+      points: binConnection.points,
+      material: binConnection.material,
+      initial_weight: binConnection.initial_weight,
+      final_weight: binConnection.final_weight,
+      state: binConnection.state,
+      created_at: binConnection.createdAt,
+      updated_at: binConnection.updatedAt,
+    };
+
+    return res.status(200).json({ data: responseData });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: 'something wrong happened' });
+  }
+};
+
+export const checkRequestedBinConnection = (config: nconf.Provider) => async (req: Request, res: Response) => {
+  const { params } = req;
+  const { binId } = params;
+
+  try {
+    const binConnection: IBinConnectionDocument | null = await BinConnectionModel.findOne(
+      { bin: binId, state: 'requested' },
+      {},
+      { sort: { createdAt: -1 } },
+    ).exec();
+
+    if (!binConnection) {
+      return res.status(404).end();
+    }
+
+    return res.status(200).end();
+  } catch (err) {
+    console.log(err);
+    return res.status(500).end();
+  }
+};
+
+export const checkAcceptedBinConnection = (config: nconf.Provider) => async (req: Request, res: Response) => {
+  const { params } = req;
+  const { connectionId } = params;
+
+  try {
+    const binConnection: IBinConnectionDocument | null = await BinConnectionModel.findOne({
+      _id: connectionId,
+      state: 'accepted',
+    }).exec();
+
+    if (!binConnection) {
+      return res.status(404).end();
+    }
+
+    return res.status(200).end();
+  } catch (err) {
+    console.log(err);
+    return res.status(500).end();
+  }
+};
+
+export const acceptBinConnection = (config: nconf.Provider) => async (req: Request, res: Response) => {
+  const { params, body } = req;
+  const { connectionId } = params;
+  const { initial_weight } = body;
+
+  try {
+    const binConnection: IBinConnectionDocument | null = await BinConnectionModel.findOneAndUpdate(
+      { _id: connectionId, state: 'requested' },
+      {
+        initial_weight,
+        state: 'accepted',
+      },
+      { returnDocument: 'after' },
+    ).exec();
+
+    if (!binConnection) {
+      return res.status(404).json({ message: 'bin-connection not found' });
+    }
+
+    const responseData = {
+      id: binConnection._id,
+      player_id: binConnection.player,
+      flow_points: binConnection.flow_points,
+      points: binConnection.points,
+      material: binConnection.material,
+      initial_weight: binConnection.initial_weight,
+      final_weight: binConnection.final_weight,
+      state: binConnection.state,
+      created_at: binConnection.createdAt,
+      updated_at: binConnection.updatedAt,
+    };
+
+    return res.status(200).json({ message: 'bin-connection accepted', data: responseData });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: 'something wrong happened' });
@@ -97,8 +213,9 @@ export const createBinConnection = (config: nconf.Provider) => async (req: Reque
 };
 
 export const endBinConnection = (config: nconf.Provider) => async (req: Request, res: Response) => {
-  // const { params } = req;
-  // const { connectionId } = params;
+  const { params, body } = req;
+  const { connectionId } = params;
+  const { final_weight } = body;
 
   // obtiene de la conexion usuario-tacho:
   // - el player, el material reciclado si el player realizó algún flujo de reciclaje
@@ -106,13 +223,50 @@ export const endBinConnection = (config: nconf.Provider) => async (req: Request,
   // termina la conexión usuario y tacho
 
   try {
-    const playerId = 'b4293250-482d-408f-92a4-1fe63088ef83';
+    const binConnection: IBinConnectionDocument | null = await BinConnectionModel.findOne({
+      _id: connectionId,
+      state: 'accepted',
+    });
+    if (!binConnection) {
+      return res.status(404).json({ message: 'bin-connection not found' });
+    }
+    const { player: playerId, flow_points, material, initial_weight } = binConnection;
+    const deltaWeigth = final_weight - initial_weight;
+    // TODO: falta determinar los puntos que se van a otorgar por el peso de los residuos depositados en el tacho
+    const points = flow_points;
+    console.log(deltaWeigth);
+
     const player: IPlayerDocument | null = await getPlayerById(playerId);
     let pointsRegisteredResp;
+    let responseData;
+    let binConnectionUpdated: IBinConnectionDocument | null;
     if (player) {
-      pointsRegisteredResp = await registerPoints(player, 10, 'glass');
+      pointsRegisteredResp = await registerPoints(player, points, material);
+      binConnectionUpdated = await BinConnectionModel.findByIdAndUpdate(
+        connectionId,
+        {
+          points,
+          final_weight,
+          state: 'ended',
+        },
+        { returnDocument: 'after' },
+      ).exec();
+
+      responseData = {
+        id: binConnectionUpdated!._id,
+        player_id: binConnectionUpdated!.player,
+        flow_points: binConnectionUpdated!.flow_points,
+        points: binConnectionUpdated!.points,
+        material: binConnectionUpdated!.material,
+        initial_weight: binConnectionUpdated!.initial_weight,
+        final_weight: binConnectionUpdated!.final_weight,
+        state: binConnectionUpdated!.state,
+        created_at: binConnectionUpdated!.createdAt,
+        updated_at: binConnectionUpdated!.updatedAt,
+        ...pointsRegisteredResp,
+      };
     }
-    return res.status(200).json({ message: 'conexión finalizada', data: pointsRegisteredResp });
+    return res.status(200).json({ message: 'bin-connection ended', data: responseData });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: 'something wrong happened' });

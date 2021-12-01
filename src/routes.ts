@@ -10,6 +10,10 @@ const checkJwt = checkJwtBuilder(config);
 
 router.post('/api/players/session', players.signUpAndLogin(config));
 router.post('/api/bins/connections', [checkJwt], bins.createBinConnection(config));
-router.put('/api/bins/connections/:connectionId/end', bins.endBinConnection(config));
+router.get('/api/bins/:binId/connections/requested', bins.getRequestedBinConnection(config));
+router.head('/api/bins/:binId/connections/requested', bins.checkRequestedBinConnection(config));
+router.patch('/api/bins/connections/:connectionId/end', bins.endBinConnection(config));
+router.patch('/api/bins/connections/:connectionId/accept', bins.acceptBinConnection(config));
+router.head('/api/bins/connections/:connectionId/accepted', bins.checkAcceptedBinConnection(config));
 
 export default router;

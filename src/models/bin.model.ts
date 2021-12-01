@@ -44,6 +44,8 @@ export interface IBinConnectionDocument extends Document {
   final_weight: number;
   material: string;
   state: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface IBinConnectionModel extends Model<IBinConnectionDocument> {}
