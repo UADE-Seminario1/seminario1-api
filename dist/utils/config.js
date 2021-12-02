@@ -22,8 +22,8 @@ var defaultConfig = {
         expiration: '24h',
     },
     google_auth: {
-        client_id: '479477726850-sr8ri901ln1jvsgoitih7p577l2auu07.apps.googleusercontent.com',
-        client_secret: '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',
+        client_id: '305599675700-galqqfi6s6cpsqb2j3r39mgksfkm0dg5.apps.googleusercontent.com',
+        client_secret: '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',
         redirect_uris: ['http://localhost:9001/oauth2callback'],
     },
 };

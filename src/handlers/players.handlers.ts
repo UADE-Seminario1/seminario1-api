@@ -2,7 +2,7 @@ import nconf from 'nconf';
 import { Request, Response } from 'express';
 import { OAuth2Client } from 'google-auth-library';
 import jwt from 'jsonwebtoken';
-import PlayerModel, { IPlayerDocument } from '../models/player.model';
+import PlayerModel, { IPlayerDocument, PlayerMedalModel, IPlayerMedalDocument } from '../models/player.model';
 
 function getToken(config: nconf.Provider, data: Object): string {
   const secret = config.get('app:secret');
@@ -32,7 +32,7 @@ export const signUpAndLogin = (config: nconf.Provider) => async (req: Request, r
     const email = data.emailAddresses[0].value;
 
     let player: IPlayerDocument;
-    const playerWithSameEmail: IPlayerDocument | null = await PlayerModel.findOne({ 'user.email': email });
+    const playerWithSameEmail: IPlayerDocument | null = await PlayerModel.findOne({ 'user.email': email }).exec();
     if (!playerWithSameEmail) {
       const emailParts = email.split('@');
       const name = emailParts[0];
@@ -51,6 +51,22 @@ export const signUpAndLogin = (config: nconf.Provider) => async (req: Request, r
       player = playerWithSameEmail;
     }
 
+    let medalsData;
+    const playerMedalsDocs: Array<IPlayerMedalDocument> = await PlayerMedalModel.find({
+      player: player._id,
+    }).exec();
+    if (playerMedalsDocs) {
+      medalsData = playerMedalsDocs.map((e) => {
+        return {
+          name: e.name,
+          target_points: e.target_points,
+          points: e.points,
+          material: e.material,
+          is_granted: e.is_granted,
+        };
+      });
+    }
+
     const token = getToken(config, { playerId: player._id });
 
     const playerData = {
@@ -60,7 +76,7 @@ export const signUpAndLogin = (config: nconf.Provider) => async (req: Request, r
       month_points: player.month_points,
       points: player.points,
       coins: player.coins,
-      /*medals: player.medals, TODO*/
+      medals: medalsData,
     };
 
     res.append('x-access-token', token);
