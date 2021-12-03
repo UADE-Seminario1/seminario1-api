@@ -46,7 +46,7 @@ if (node_env === 'development') {
 app.use(router);
 
 app.get('/', function (_, res) {
-  res.send('Hello World');
+  res.send("let's recycle dude...");
 });
 
 export default app;

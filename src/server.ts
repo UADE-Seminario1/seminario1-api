@@ -3,7 +3,6 @@ import app from './app';
 import getConfig from './utils/config';
 
 const config = getConfig();
-console.log(config.get());
 const lightship = createLightship();
 
 const server = app.listen(config.get('port'), config.get('host'), () => {
