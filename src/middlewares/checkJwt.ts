@@ -5,7 +5,7 @@ import nconf from 'nconf';
 const checkJwtBuilder = (config: nconf.Provider) => (req: Request, res: Response, next: NextFunction) => {
   const tokenName = 'x-access-token';
   const token = <string>req.headers[tokenName];
-  const secret = config.get('SECRET');
+  const secret = config.get('secret');
   const jwtExpiration = config.get('jwt:expiration');
 
   if (!token) {
