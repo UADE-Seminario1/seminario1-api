@@ -128,7 +128,7 @@ export const profile = (config: nconf.Provider) => async (req: Request, res: Res
       medals: medalsData,
     };
 
-    return res.status(201).json({ data: responseData });
+    return res.status(200).json({ data: responseData });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: 'something wrong happened' });
@@ -162,7 +162,7 @@ export const ranking = (config: nconf.Provider) => async (req: Request, res: Res
       ranking_monthly: playerRanking2Docs,
     };
 
-    return res.status(201).json({ data: responseData });
+    return res.status(200).json({ data: responseData });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: 'something wrong happened' });

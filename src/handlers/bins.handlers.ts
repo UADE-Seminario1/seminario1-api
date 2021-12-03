@@ -89,7 +89,7 @@ export const createBinConnection = (config: nconf.Provider) => async (req: Reque
       connection_id: newBinConnection._id,
     };
 
-    return res.status(200).json({ message: 'bin-connection requested', data: responseData });
+    return res.status(201).json({ message: 'bin-connection requested', data: responseData });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: 'something wrong happened' });
