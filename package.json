@@ -17,7 +17,8 @@
     "dev": "nodemon --watch src -e ts --exec npm run dev:start",
     "watch:ts": "tsc -w",
     "lint": "eslint . --ext .ts",
-    "google:token": "node examples/google-signin.js"
+    "google:token": "node examples/google-signin.js",
+    "postinstall": "npm run build:ts"
   },
   "author": "",
   "license": "ISC",

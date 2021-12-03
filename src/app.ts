@@ -11,7 +11,7 @@ import cors from 'cors';
 mongoose.Promise = bluebird;
 
 const config = getConfig();
-const node_env = config.get('node_env');
+const node_env = config.get('NODE_ENV');
 const app: express.Application = express();
 const mongoUrl = config.get('mongodb:url');
 const mongoOpts: ConnectOptions = config.get('mongodb:options');
@@ -32,7 +32,6 @@ mongoose
     console.log(e);
   });
 
-app.set('port', config.get('app:port'));
 app.use(cors(corsOptions));
 app.use(compression());
 app.use(bodyParser.json());

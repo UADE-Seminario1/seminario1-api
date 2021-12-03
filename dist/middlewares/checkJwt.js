@@ -7,7 +7,7 @@ var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var checkJwtBuilder = function (config) { return function (req, res, next) {
     var tokenName = 'x-access-token';
     var token = req.headers[tokenName];
-    var secret = config.get('app:secret');
+    var secret = config.get('app:SECRET');
     var jwtExpiration = config.get('jwt:expiration');
     if (!token) {
         res.status(500).json({ auth: false, message: 'no token provided' });

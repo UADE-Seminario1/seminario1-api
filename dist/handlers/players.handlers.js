@@ -74,7 +74,7 @@ var google_auth_library_1 = require("google-auth-library");
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var player_model_1 = __importStar(require("../models/player.model"));
 function getToken(config, data) {
-    var secret = config.get('app:secret');
+    var secret = config.get('app:SECRET');
     var jwtExpiration = config.get('jwt:expiration');
     return jsonwebtoken_1.default.sign(data, secret, {
         expiresIn: jwtExpiration,
