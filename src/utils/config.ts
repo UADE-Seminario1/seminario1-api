@@ -10,11 +10,9 @@ const defaultConfig = {
     },
   },
   NODE_ENV: 'development',
-  app: {
-    SECRET: '123',
-    HOST: '0.0.0.0',
-    PORT: 9001,
-  },
+  SECRET: '123',
+  HOST: '0.0.0.0',
+  PORT: 9001,
   jwt: {
     expiration: '24h',
   },

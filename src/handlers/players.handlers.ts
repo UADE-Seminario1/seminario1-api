@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import PlayerModel, { IPlayerDocument, PlayerMedalModel, IPlayerMedalDocument } from '../models/player.model';
 
 function getToken(config: nconf.Provider, data: Object): string {
-  const secret = config.get('app:SECRET');
+  const secret = config.get('SECRET');
   const jwtExpiration = config.get('jwt:expiration');
 
   return jwt.sign(data, secret, {

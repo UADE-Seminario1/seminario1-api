@@ -5,8 +5,8 @@ import getConfig from './utils/config';
 const config = getConfig();
 const lightship = createLightship();
 
-const server = app.listen(config.get('app:PORT'), config.get('app:HOST'), () => {
-  console.log('  App is running at http://localhost:%d in %s mode', config.get('app:PORT'), config.get('NODE_ENV'));
+const server = app.listen(config.get('PORT'), config.get('HOST'), () => {
+  console.log('  App is running at http://localhost:%d in %s mode', config.get('PORT'), config.get('NODE_ENV'));
   console.log('  Press CTRL-C to stop\n');
   lightship.signalReady();
 });
