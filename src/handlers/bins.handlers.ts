@@ -233,6 +233,7 @@ export const endBinConnection = (config: nconf.Provider) => async (req: Request,
     const { player: playerId, flow_points, material, initial_weight } = binConnection;
     const deltaWeigth = final_weight - initial_weight;
     // TODO: falta determinar los puntos que se van a otorgar por el peso de los residuos depositados en el tacho
+    // TODO: agregar los puntos por reciclar
     const points = flow_points;
     console.log(deltaWeigth);
 
@@ -267,6 +268,60 @@ export const endBinConnection = (config: nconf.Provider) => async (req: Request,
       };
     }
     return res.status(200).json({ message: 'bin-connection ended', data: responseData });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: 'something wrong happened' });
+  }
+};
+
+export const checkEndedBinConnection = (config: nconf.Provider) => async (req: Request, res: Response) => {
+  const { params } = req;
+  const { connectionId } = params;
+
+  try {
+    const binConnection: IBinConnectionDocument | null = await BinConnectionModel.findOne({
+      _id: connectionId,
+      state: 'ended',
+    }).exec();
+
+    if (!binConnection) {
+      return res.status(404).end();
+    }
+
+    return res.status(200).end();
+  } catch (err) {
+    console.log(err);
+    return res.status(500).end();
+  }
+};
+
+export const getEndedBinConnection = (config: nconf.Provider) => async (req: Request, res: Response) => {
+  const { params } = req;
+  const { connectionId } = params;
+  try {
+    const binConnection: IBinConnectionDocument | null = await BinConnectionModel.findOne({
+      _id: connectionId,
+      state: 'ended',
+    }).exec();
+
+    if (!binConnection) {
+      return res.status(404).json({ message: 'ended bin-connection not found' });
+    }
+
+    const responseData = {
+      id: binConnection._id,
+      player_id: binConnection.player,
+      flow_points: binConnection.flow_points,
+      points: binConnection.points,
+      material: binConnection.material,
+      initial_weight: binConnection.initial_weight,
+      final_weight: binConnection.final_weight,
+      state: binConnection.state,
+      created_at: binConnection.createdAt,
+      updated_at: binConnection.updatedAt,
+    };
+
+    return res.status(200).json({ data: responseData });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: 'something wrong happened' });

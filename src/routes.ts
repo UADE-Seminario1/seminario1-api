@@ -16,6 +16,8 @@ router.get('/api/bins/:binId/connections/requested', bins.getRequestedBinConnect
 router.head('/api/bins/:binId/connections/requested', bins.checkRequestedBinConnection(config));
 router.patch('/api/bins/connections/:connectionId/end', bins.endBinConnection(config));
 router.patch('/api/bins/connections/:connectionId/accept', bins.acceptBinConnection(config));
-router.head('/api/bins/connections/:connectionId/accepted', bins.checkAcceptedBinConnection(config));
+router.head('/api/bins/connections/:connectionId/accepted', [checkJwt], bins.checkAcceptedBinConnection(config));
+router.head('/api/bins/connections/:connectionId/ended', [checkJwt], bins.checkEndedBinConnection(config));
+router.get('/api/bins/connections/:connectionId/ended', [checkJwt], bins.getEndedBinConnection(config));
 
 export default router;
